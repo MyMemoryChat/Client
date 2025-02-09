@@ -9,9 +9,9 @@ function ChatMessages(messages){
     <div className='chat-messages'>
       {messages.messages.map((message, index) => (
         <div key={index} className={`${message.role} message ${message.message.image ? 'image' : ''}`}>
-          {message.message.image && (
-            <img src={message.message.image} alt='preview' />
-          )}
+          {message.message.images.map((image, index) => (
+            image !== null && (<img key={index} src={image.image_file} alt='preview' />)
+          ))}
           <p>{message.message.message}</p>
         </div>
       ))}
@@ -32,13 +32,38 @@ function ChatBar({addMessage}){
     }
   }
 
-  const handleQuery = ()=>{
+  const modelAnswerFetch = async () => {
+    const response = await fetch('http://localhost:5124/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text: query,
+        image: image
+      })
+    });
+    const data = await response.json();
+    if (data.answer.error){
+      console.error('Error:', data.answer.error);
+      return;
+    }
+    console.log(data);
+    addMessage('model', data.answer);
+  }
+
+  const handleQuery = async ()=>{
     if (query==='') return;
     console.log(query);
     addMessage('user', {
       message: query,
-      image: image
+      images: [image]
     });
+    try {
+      await modelAnswerFetch();
+    } catch (error) {
+      console.error('Error fetching model answer:', error);
+    }
     setQuery('');
     setImage(null);
   }
