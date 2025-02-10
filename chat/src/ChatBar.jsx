@@ -5,7 +5,7 @@ import './assets/css/ChatBar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faImage, faX } from '@fortawesome/free-solid-svg-icons';
 
-export default function ChatBar({addMessage}){
+export default function ChatBar({addMessage,removeLastMessage}){
     const [image, setImage] = useState(null);
     const [query, setQuery] = useState('');
   
@@ -54,6 +54,9 @@ export default function ChatBar({addMessage}){
         await modelAnswerFetch({text, img});
       } catch (error) {
         console.error('Error fetching model answer:', error);
+        setQuery(text);
+        setImage(img);
+        removeLastMessage();
       }
     }
   
