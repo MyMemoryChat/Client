@@ -1,0 +1,17 @@
+#chat {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--primary-bg-color);
+    width: 100vw;
+    height: 80vh;
+    align-items: center;
+    padding: 10vh 0;
+}
+
+#chat h1 {
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    font-family: 'Outfit-Bold';
+    flex: 1;
+}
