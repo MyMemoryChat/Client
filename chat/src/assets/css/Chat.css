@@ -1,11 +1,14 @@
 #chat {
     display: flex;
     flex-direction: column;
+    gap: 20px;
     background-color: var(--primary-bg-color);
     width: 100vw;
-    height: 80vh;
+    min-width: 400px;
+    height: 85vh;
+    min-height: 600px;
     align-items: center;
-    padding: 10vh 0;
+    padding: 5vh 0 10vh;
 }
 
 #chat h1 {
@@ -14,4 +17,71 @@
     align-items: center;
     font-family: 'Outfit-Bold';
     flex: 1;
+}
+
+#chat .chat-messages {
+    display: flex;
+    flex-direction: column;
+    width: inherit;
+    overflow-y: scroll;
+    min-height: 600px;
+    height: 85vh;
+    min-width: 400px;
+}
+
+#chat .chat-messages .message{
+    position: relative;
+    width: calc(100% - 40vw);
+    margin: 0 20vw;
+}
+
+#chat .chat-messages .message {
+    display: flex;
+    flex-direction: column;
+}
+
+#chat .chat-messages .message p {
+    padding: 10px;
+    width: 20vw;
+    min-width: 150px;
+    max-width: 300px;
+    border-radius: 10px;
+    font-family: 'Roboto-Regular';
+    font-size: 14px;
+}
+
+#chat .chat-messages .message.user {
+    align-items: flex-end;
+}
+
+#chat .chat-messages .message.user .images{
+    flex-direction: row-reverse;
+}
+
+#chat .chat-messages .message.model p {
+    background-color: var(--secondary-bg-color);
+    color: var(--text-color);
+}
+
+#chat .chat-messages .message.user p {
+    background-color: var(--text-color);
+    color: var(--secondary-bg-color);
+}
+
+#chat .chat-messages .message .images {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 30vw;
+    max-width: 500px;
+    min-width: 200px;
+}
+
+#chat .chat-messages .message img {
+    width: 15vw;
+    min-width: 100px;
+    max-width: 250px;
+    height: auto;
+    border-radius: 10px;
 }

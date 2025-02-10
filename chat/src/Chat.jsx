@@ -9,9 +9,11 @@ function ChatMessages(messages){
     <div className='chat-messages'>
       {messages.messages.map((message, index) => (
         <div key={index} className={`${message.role} message ${message.message.image ? 'image' : ''}`}>
-          {message.message.images.map((image, index) => (
-            image !== null && (<img key={index} src={image.image_file} />)
-          ))}
+          <div className='images'>
+            {message.message.images.map((image, index) => (
+              image !== null && (<img key={index} src={image.image_file} />)
+            ))}
+          </div>
           <p>{message.message.message}</p>
         </div>
       ))}
@@ -33,7 +35,7 @@ export default function Chat(){
 
   return(
     <div id='chat'>
-      {messages.length > 0 ? <ChatMessages messages={messages}/> : <h1>Tell me about you</h1>}
+      {messages.length > 0 ? <ChatMessages messages={messages}/> : <h1>Tell me about yourself 🤗</h1>}
       <ChatBar addMessage={addMessage}/>
     </div>
   )
