@@ -1,0 +1,24 @@
+#nav-bar {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    min-width: 400px;
+    height: 50px;
+    background-color: var(--secondary-bg-color);
+}
+
+#nav-bar h1 {
+    flex: 1;
+    text-align: center;
+    font-family: 'Roboto-Regular';
+    font-size: 24px;
+    color: var(--title-color);
+    cursor: pointer;
+}
+#nav-bar h1:hover {
+    filter: brightness(0.8);
+    transition: filter 0.3s;
+}

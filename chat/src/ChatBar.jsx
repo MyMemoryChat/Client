@@ -5,9 +5,12 @@ import './assets/css/ChatBar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faImage, faX } from '@fortawesome/free-solid-svg-icons';
 
+import UserMessage from './UserMessage'
+
 export default function ChatBar({addMessage,removeLastMessage}){
     const [image, setImage] = useState(null);
     const [query, setQuery] = useState('');
+    const [userMessage, setUserMessage] = useState(null);
   
     const loadImage = (event) => {
       const file = event.target.files[0];
@@ -19,23 +22,29 @@ export default function ChatBar({addMessage,removeLastMessage}){
     }
   
     const modelAnswerFetch = async ({text, img}) => {
-      const response = await fetch('http://localhost:5124/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          text: text,
-          image: img !== null ? image.image_file : null
-        })
-      });
-      const data = await response.json();
-      if (data.answer.error){
-        console.error('Error:', data.answer.error);
-        return;
+      try {
+        const response = await fetch('http://localhost:5124/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            text: text,
+            image: img !== null ? image.image_file : null
+          })
+        });
+        const data = await response.json();
+        if (data.error) {
+          throw Error(data.error);
+        }
+        console.log(data);
+        addMessage('model', data);
+      } catch (error) {
+        console.error('Error fetching model answer:', error);
+        setUserMessage('Error fetching model answer');
+        setTimeout(() => setUserMessage(null), 5000);
+        throw error;
       }
-      console.log(data);
-      addMessage('model', data.answer);
     }
   
     const handleQuery = async ()=>{
@@ -53,7 +62,6 @@ export default function ChatBar({addMessage,removeLastMessage}){
       try {
         await modelAnswerFetch({text, img});
       } catch (error) {
-        console.error('Error fetching model answer:', error);
         setQuery(text);
         setImage(img);
         removeLastMessage();
@@ -97,6 +105,7 @@ export default function ChatBar({addMessage,removeLastMessage}){
         <button className='search button' onClick={handleQuery}>
           <FontAwesomeIcon icon={faSearch} />
         </button>
+        {userMessage && (<UserMessage message={userMessage} isVanishing={true} messageType='error' />)}
       </div>
     )
 }
