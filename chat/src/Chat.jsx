@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import './assets/css/Chat.css'
+import { useMessages } from './context.jsx';
+import './assets/css/Chat.css';
+import { motion } from "framer-motion";
 
 import ChatBar from './ChatBar.jsx'
 
@@ -18,38 +19,31 @@ function ChatMessages(messages){
         </div>
       ))}
       {messages.messages.length > 0 && messages.messages[messages.messages.length - 1].role === 'user' && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="50"
-          height="50"
-          viewBox="0 0 50 50"
-          className='loading-spin'
-        >
-          <path
-            fill="#000"
-            d="M43.935,25.146c0-10.318-8.364-18.682-18.682-18.682
-              c-10.318,0-18.682,8.364-18.682,18.682h4.068
-              c0-8.064,6.55-14.614,14.614-14.614
-              c8.064,0,14.614,6.55,14.614,14.614H43.935z"
-          >
-            <animateTransform
-              attributeType="xml"
-              attributeName="transform"
-              type="rotate"
-              from="0 25 25"
-              to="360 25 25"
-              dur="0.6s"
-              repeatCount="indefinite"
+        <div className="flex gap-1">
+          {[0, 1, 2].map((index) => (
+            <motion.span
+              key={index}
+              className="w-2 h-2 bg-gray-400 rounded-full"
+              animate={{
+                y: [0, -5, 0],
+                opacity: [0.3, 1, 0.3],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: index * 0.2,
+              }}
             />
-          </path>
-        </svg>      
+          ))}
+        </div>    
       )}
     </div>
   )
 }
 
 export default function Chat(){
-  const [messages, setMessages] = useState([]);
+  const { messages, setMessages } = useMessages();
 
   const addMessage = (role, message)=>{
     const newMessage = {
