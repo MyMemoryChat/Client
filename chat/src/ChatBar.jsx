@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 import './assets/css/ChatBar.css'
 
@@ -11,6 +11,14 @@ export default function ChatBar({addMessage,removeLastMessage}){
     const [image, setImage] = useState(null);
     const [query, setQuery] = useState('');
     const [userMessage, setUserMessage] = useState(null);
+    const textAreaRef = useRef(null);
+
+    // Auto-grow function
+    const handleInput = () => {
+      const element = textAreaRef.current;
+      element.style.height = "16px"; // Reset height to avoid accumulation
+      element.style.height = element.scrollHeight + "px"; // Expand based on content
+    };
   
     const loadImage = (event) => {
       const file = event.target.files[0];
@@ -50,7 +58,10 @@ export default function ChatBar({addMessage,removeLastMessage}){
       if (query==='') return;
       const text = query;
       const img = image;
-  
+
+      const element = textAreaRef.current;
+      element.style.height = "16px";
+
       setQuery('');
       setImage(null);
   
@@ -96,6 +107,8 @@ export default function ChatBar({addMessage,removeLastMessage}){
         )}
         <textarea 
           type='text' 
+          ref={textAreaRef}
+          onInput={handleInput}
           value={query}
           onChange={(event)=>setQuery(event.target.value)}
           placeholder='Write something...'

@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 import { useMessages } from './context.jsx';
 import './assets/css/Chat.css';
 import { motion } from "framer-motion";
@@ -7,7 +9,13 @@ import Image from './Image.jsx';
 
 function ChatMessages(){
   const { messages } = useMessages();
-  console.log(messages)
+  console.log(messages);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return(
     <div className='chat-messages'>
       {messages.map((message, index) => (
@@ -41,6 +49,7 @@ function ChatMessages(){
           </div>
         </div>
       )}
+      <div ref={messagesEndRef} />
     </div>
   )
 }
