@@ -31,7 +31,7 @@ export default function ChatBar({addMessage,removeLastMessage}){
   
     const modelAnswerFetch = async ({text, img}) => {
       try {
-        const response = await fetch('http://192.168.2.34:5124/', {
+        const response = await fetch('http://localhost:5124/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

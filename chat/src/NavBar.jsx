@@ -4,7 +4,7 @@ import { useMessages } from "./context";
 import './assets/css/NavBar.css'
 
 export default function NavBar(){
-    const { messages, setMessages } = useMessages();
+    const { setMessages } = useMessages();
 
     const resetAgents = () => {
         fetch('http://localhost:5124/reset', {
