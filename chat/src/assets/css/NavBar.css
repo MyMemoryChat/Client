@@ -8,6 +8,7 @@
     min-width: 400px;
     height: 50px;
     background-color: var(--secondary-bg-color);
+    z-index: 2;
 }
 
 #nav-bar h1 {

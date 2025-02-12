@@ -37,7 +37,6 @@ export default function ChatBar({addMessage,removeLastMessage}){
         if (data.error) {
           throw Error(data.error);
         }
-        console.log(data);
         addMessage('model', data);
       } catch (error) {
         console.error('Error fetching model answer:', error);

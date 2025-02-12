@@ -5,13 +5,13 @@
     background-color: var(--primary-bg-color);
     width: 100vw;
     min-width: 400px;
-    height: 85vh;
+    height: 80vh;
     min-height: 600px;
     align-items: center;
-    padding: 5vh 0 10vh;
+    padding: 10vh 0 10vh;
 }
 
-#chat h1 {
+#chat h1.main-title {
     color: var(--text-color);
     display: flex;
     align-items: center;
@@ -38,17 +38,14 @@
 }
 
 #chat .chat-messages .message{
-    position: relative;
     width: calc(100% - 40vw);
-    margin: 0 20vw;
-}
-
-#chat .chat-messages .message {
+    margin: 5px 20vw;
     display: flex;
     flex-direction: column;
 }
 
 #chat .chat-messages .message p {
+    margin: 0;
     padding: 10px;
     width: 20vw;
     min-width: 150px;
@@ -87,10 +84,21 @@
     min-width: 200px;
 }
 
-#chat .chat-messages .message img {
-    width: 15vw;
-    min-width: 100px;
-    max-width: 150px;
-    height: fit-content;
-    border-radius: 10px;
+.typing-indicator {
+    display: flex;
+    flex-direction: row;
+    width: 35px;
+    height: 20px;
+    border-radius: 20px;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px; 
+    background-color: var(--secondary-bg-color);
+}
+
+.typing-indicator span {
+    width: 8px;            /* Size of each dot */
+    height: 8px;
+    background-color: var(--text-color); /* Gray color */
+    border-radius: 50%;    /* Make it a circle */
 }
