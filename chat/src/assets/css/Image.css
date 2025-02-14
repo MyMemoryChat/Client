@@ -11,8 +11,10 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 90vw;
+    padding: 0 5vw;
     height: 100vh;
+    min-height: 350px;
     background: #e0e0e0da;
     z-index: 3;
     display: flex;
@@ -30,15 +32,36 @@
 .image .image-view h1 {
     font-family: 'Outfit-Bold';
     font-size: 20px;
+    text-align: center;
 }
 
 .image .image-view figcaption {
     font-family: 'Roboto-Regular';
     font-size: 16px;
+    text-align: justify;
 }
 
 .image .image-view .image-focus{
     width: fit-content;
     height: 60vh;
     border-radius: 10px;
+}
+
+@media (max-width: 600px) {
+    .image .text-image {
+        width: 40vw;  /* Make the image bigger */
+        max-width: 150px;
+        max-height: 200px;
+        border-radius: 5px;
+    }
+    .image .image-view{
+        gap: 10px;
+        min-height: 350px;
+    }
+    .image .image-view .image-focus{
+        width: 50vw;
+        min-width: 200px;
+        height: fit-content;
+        border-radius: 10px;
+    }
 }

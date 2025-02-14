@@ -8,7 +8,6 @@
     width: 75vw;
     min-width: 375px;
     max-width: 1000px;
-    min-height: 50px;
     border-radius: 16px;
     transition: height 0.2s ease-in-out;
 }
@@ -36,6 +35,7 @@
 .chat-bar textarea{
     color: var(--secondary-bg-color);
     font-size: 16px;
+    padding: 15px 0;
     border: none;
     font-family: 'Roboto-Regular';
     background: none;
@@ -43,7 +43,7 @@
     outline: none;
     flex:0.8;
     height: 16px;
-    max-height: 200px;
+    max-height: 15vh;
     overflow-y: scroll; 
     align-self: center;
 }

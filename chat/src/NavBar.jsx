@@ -1,10 +1,11 @@
 import React from "react";
-import { useMessages } from "./context";
+import { useDispatch } from "react-redux";
+import { clearMessages } from "./store/messagesSlice";
 
 import './assets/css/NavBar.css'
 
 export default function NavBar(){
-    const { setMessages } = useMessages();
+    const dispatch = useDispatch();
 
     const resetAgents = () => {
         fetch('http://localhost:5124/reset', {
@@ -17,12 +18,11 @@ export default function NavBar(){
         .catch((error) => {
             console.error('Error resetting agents:', error);
         });
-    }
-
+    };
     const resetConversation = () => {
         resetAgents();
-        setMessages([]);
-    }
+        dispatch(clearMessages());
+    };
 
     return(
         <div id='nav-bar'>

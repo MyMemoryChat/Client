@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
+import ReactMarkdown from "react-markdown";
+import { useSelector } from "react-redux";
 
-import { useMessages } from './context.jsx';
 import './assets/css/Chat.css';
 import { motion } from "framer-motion";
 
@@ -8,7 +9,7 @@ import ChatBar from './ChatBar.jsx'
 import Image from './Image.jsx';
 
 function ChatMessages(){
-  const { messages } = useMessages();
+  const messages = useSelector((state) => state.messages.messages);
   console.log(messages);
   const messagesEndRef = useRef(null);
 
@@ -22,10 +23,12 @@ function ChatMessages(){
         <div key={index} className={`${message.role} message ${message.message.image ? 'image' : ''}`}>
           <div className='images'>
             {message.message.images.map((image, index) => (
-              image !== null && (<Image image={image} />)
+              image?<Image key={index} image={image} />:null
             ))}
           </div>
-          <p>{message.message.message}</p>
+          <div className='text'>
+            <ReactMarkdown>{message.message.message}</ReactMarkdown>
+          </div>
         </div>
       ))}
       {messages.length > 0 && messages[messages.length - 1].role === 'user' && (
@@ -55,26 +58,12 @@ function ChatMessages(){
 }
 
 export default function Chat(){
-  const { messages, setMessages } = useMessages();
-  console.log(messages);
-
-  const addMessage = (role, message)=>{
-    const newMessage = {
-      role: role,
-      message: message
-    };
+  const messages = useSelector((state) => state.messages.messages);
   
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-  }
-
-  const removeLastMessage = () => {
-    setMessages((prevMessages) => prevMessages.slice(0, -1));
-  }
-
   return(
     <div id='chat'>
       {messages.length > 0 ? <ChatMessages/> : <h1 className='main-title'>Tell me about yourself 🤗</h1>}
-      <ChatBar addMessage={addMessage} removeLastMessage={removeLastMessage}/>
+      <ChatBar/>
     </div>
   )
 }

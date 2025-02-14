@@ -6,7 +6,7 @@
     justify-content: space-between;
     width: 100vw;
     min-width: 400px;
-    height: 5vh;
+    height: 40px;
     background-color: var(--secondary-bg-color);
     z-index: 2;
 }

@@ -1,12 +1,11 @@
 #chat {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     background-color: var(--primary-bg-color);
     width: 100vw;
     min-width: 350px;
     height: 85vh;
-    min-height: 500px;
+    min-height: 400px;
     align-items: center;
     padding: 5vh 0 10vh;
 }
@@ -24,7 +23,7 @@
     flex-direction: column;
     width: inherit;
     overflow-y: scroll;
-    min-height: 500px;
+    min-height: 300px;
     height: 85vh;
     min-width: 350px;
 }
@@ -44,8 +43,7 @@
     flex-direction: column;
 }
 
-#chat .chat-messages .message p {
-    margin: 0;
+#chat .chat-messages .message .text {
     padding: 10px;
     width: 20vw;
     min-width: 150px;
@@ -56,6 +54,10 @@
     word-wrap: break-word;
 }
 
+#chat .chat-messages .message .text p{
+    margin: 0;
+}
+
 #chat .chat-messages .message.user {
     align-items: flex-end;
 }
@@ -64,12 +66,12 @@
     flex-direction: row-reverse;
 }
 
-#chat .chat-messages .message.model p {
+#chat .chat-messages .message.model .text {
     background-color: var(--secondary-bg-color);
     color: var(--text-color);
 }
 
-#chat .chat-messages .message.user p {
+#chat .chat-messages .message.user .text {
     background-color: var(--text-color);
     color: var(--secondary-bg-color);
 }

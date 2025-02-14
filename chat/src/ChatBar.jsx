@@ -1,5 +1,8 @@
 import { useState, useRef } from 'react'
 
+import { useDispatch } from 'react-redux';
+import { addMessage, removeLastMessage } from "./store/messagesSlice";
+
 import './assets/css/ChatBar.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,17 +10,20 @@ import { faSearch, faImage, faX } from '@fortawesome/free-solid-svg-icons';
 
 import UserMessage from './UserMessage'
 
-export default function ChatBar({addMessage,removeLastMessage}){
+export default function ChatBar({}){
     const [image, setImage] = useState(null);
     const [query, setQuery] = useState('');
     const [userMessage, setUserMessage] = useState(null);
     const textAreaRef = useRef(null);
+    const dispatch = useDispatch();
 
     // Auto-grow function
     const handleInput = () => {
       const element = textAreaRef.current;
       element.style.height = "16px"; // Reset height to avoid accumulation
-      element.style.height = element.scrollHeight + "px"; // Expand based on content
+      const computedStyle = window.getComputedStyle(element);
+      const padding = parseFloat(computedStyle.paddingTop) + parseFloat(computedStyle.paddingBottom);
+      element.style.height = element.scrollHeight - padding + "px"; // Expand based on content
     };
   
     const loadImage = (event) => {
@@ -31,7 +37,7 @@ export default function ChatBar({addMessage,removeLastMessage}){
   
     const modelAnswerFetch = async ({text, img}) => {
       try {
-        const response = await fetch('http://localhost:5124/', {
+        const response = await fetch('http://192.168.2.34:5124/generate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -45,7 +51,13 @@ export default function ChatBar({addMessage,removeLastMessage}){
         if (data.error) {
           throw Error(data.error);
         }
-        addMessage('model', data);
+        dispatch(addMessage({
+          role: 'model', 
+          message: {
+            message: data.message,
+            images: data.images
+          }
+        }));
       } catch (error) {
         console.error('Error fetching model answer:', error);
         setUserMessage('Error fetching model answer');
@@ -65,16 +77,19 @@ export default function ChatBar({addMessage,removeLastMessage}){
       setQuery('');
       setImage(null);
   
-      addMessage('user', {
-        message: text,
-        images: [img]
-      });
+      dispatch(addMessage({
+        role: 'user', 
+        message:{
+          message: text,
+          images: [img?img:null]
+        }
+      }));
       try {
         await modelAnswerFetch({text, img});
       } catch (error) {
         setQuery(text);
         setImage(img);
-        removeLastMessage();
+        dispatch(removeLastMessage());
       }
     }
   
