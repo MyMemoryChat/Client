@@ -8,7 +8,7 @@ export default function NavBar(){
     const dispatch = useDispatch();
 
     const resetAgents = () => {
-        fetch('http://localhost:5124/reset', {
+        fetch('http://192.168.2.34:5124/reset', {
             method: 'GET'
         })
         .then(response => response.json())
